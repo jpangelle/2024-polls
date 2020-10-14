@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import axios from 'axios';
 import './App.css';
 
+type Joke = {
+  msg: string;
+};
+
 function App() {
+  const [data, setData] = useState<Joke>();
+
+  const getDadJoke = async () => {
+    const response = await axios('/.netlify/functions/polls');
+    setData(response.data);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={() => getDadJoke()}>Get Dad Joke</button>
+      <div>{data && data.msg}</div>
     </div>
   );
 }
