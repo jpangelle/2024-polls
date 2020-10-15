@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { Biden } from './Biden';
+import { Loader } from './Loader';
 import { National } from './National';
 import { Trump } from './Trump';
 import './App.css';
@@ -68,7 +69,7 @@ function App() {
   return (
     <div className="App">
       <div className="header">538 Latest Polls</div>
-      {status === 'loading' && 'Loading...'}
+      {status === 'loading' && <Loader />}
       {status === 'success' && nationalPoll && (
         <>
           <National leader={nationalPoll.leader} margin={nationalPoll.margin} />
