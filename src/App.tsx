@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
 type Joke = {
-  msg: string;
+  margins: [];
 };
 
 function App() {
   const [data, setData] = useState<Joke>();
 
-  const getDadJoke = async () => {
-    const response = await axios('/.netlify/functions/polls');
-    setData(response.data);
-  };
+  useEffect(() => {
+    (async () => {
+      const response = await axios('/.netlify/functions/polls');
+      setData(response.data);
+    })();
+  }, []);
 
   return (
     <div className="App">
-      <button onClick={() => getDadJoke()}>Get Dad Joke</button>
-      <div>{data && data.msg}</div>
+      <h1>Latest Poll Averages</h1>
+      {data &&
+        data.margins.map(({ state, leader, margin }) => (
+          <p>
+            <div>
+              <strong>{state}</strong>
+            </div>
+            <div>
+              {leader}: {margin}
+            </div>
+          </p>
+        ))}
     </div>
   );
 }
