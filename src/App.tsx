@@ -79,7 +79,7 @@ function App() {
         </>
       )}
       <div className="footer">
-        <a href="https://projects.fivethirtyeight.com/2020-general-data/presidential_poll_averages_2020.csv">
+        <a href="https://fivethirtyeight.com/">
           <img src="https://i.imgur.com/izo5MjD.png" alt="538 logo" />
         </a>
         <a href="https://github.com/jpangelle/2020-polls">
