@@ -36,6 +36,11 @@
   justify-content: center;
 }
 
+.biden,
+.trump {
+  font-size: 20px;
+}
+
 .biden {
   color: #576ca2;
 }
@@ -45,5 +50,22 @@
 }
 
 .national {
+  font-size: 24px;
   margin-bottom: 0;
+}
+
+@media only screen and (max-width: 500px) {
+  .candidates {
+    grid-template-columns: 150px 150px;
+  }
+
+  .biden,
+  .trump {
+    font-size: 16px;
+  }
+
+  .national {
+    font-size: 20px;
+    margin-bottom: 0;
+  }
 }
