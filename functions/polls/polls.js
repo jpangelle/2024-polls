@@ -1,29 +1,15 @@
 const axios = require('axios');
 const csv = require('csvtojson');
 const { DateTime } = require('luxon');
+const {
+  BATTLEGROUND_STATES,
+  CANDIDATES_LONG,
+  CANDIDATES_SHORT,
+} = require('./constants');
 
 exports.handler = async function () {
-  const BIDEN = 'Joseph R. Biden Jr.';
-  const TRUMP = 'Donald Trump';
-
-  const candidates = [BIDEN, TRUMP];
-  const battlegroundStates = [
-    'Arizona',
-    'Florida',
-    'Georgia',
-    'Iowa',
-    'Michigan',
-    'Minnesota',
-    'National',
-    'Nevada',
-    'North Carolina',
-    'Ohio',
-    'Pennsylvania',
-    'Texas',
-    'Wisconsin',
-  ];
-
   try {
+    // fetch CSV data from fivethirtyeight
     const { data } = await axios(
       'https://projects.fivethirtyeight.com/2020-general-data/presidential_poll_averages_2020.csv',
     );
@@ -31,15 +17,26 @@ exports.handler = async function () {
     // convert to JSON
     const pollResults = await csv().fromString(data);
 
+    // get current date in the format of mm/dd/yyyy
     const date = DateTime.local().toLocaleString();
 
+    /*
+     * filter for polls:
+     *   - today's date
+     *   - Biden and Trump
+     *   - in battleground states
+     */
     const pollResults2020 = pollResults.filter(
-      ({ candidate_name, modeldate, state }) =>
+      ({ candidate_name: candidateName, modeldate, state }) =>
         modeldate === date &&
-        candidates.includes(candidate_name) &&
-        battlegroundStates.includes(state),
+        CANDIDATES_LONG.includes(candidateName) &&
+        BATTLEGROUND_STATES.includes(state),
     );
 
+    /**
+     * @param {{Biden: number, Trump: number }} percents - the percentage of each candidate in a give state
+     * @returns {string} leader of the given state
+     */
     const computeLeader = percents => {
       if (percents.Biden > percents.Trump) {
         return 'Biden';
@@ -49,44 +46,44 @@ exports.handler = async function () {
       return 'Tie';
     };
 
+    /**
+     * @param {{Biden: number, Trump: number }} percents - the percentage of each candidate in a give state
+     * @returns {number} margin between the candidates
+     */
     const computeMargin = percents =>
       Math.round(Math.abs(percents.Biden - percents.Trump) * 10) / 10;
 
-    const statePercentages = pollResults2020.reduce((acc, cur) => {
+    /*
+     * reduces the individual candidate - state objects into a single state object that
+     * contains Biden and Trump's poll percentage
+     */
+    const statePercentages = pollResults2020.reduce((results, stateResult) => {
       const {
         candidate_name: candidateName,
         pct_trend_adjusted: pctTrendAdjusted,
         state,
-      } = cur;
+      } = stateResult;
       const pctTrendAdjustedNum = Number(pctTrendAdjusted);
+      const candidateShortName = CANDIDATES_SHORT[candidateName];
 
-      if (acc[state]) {
-        if (candidateName === BIDEN) {
-          acc[state] = {
-            ...acc[state],
-            Biden: pctTrendAdjustedNum,
-          };
-        } else {
-          acc[state] = {
-            ...acc[state],
-            Trump: pctTrendAdjustedNum,
-          };
-        }
+      if (results[state]) {
+        results[state] = {
+          ...results[state],
+          [candidateShortName]: pctTrendAdjustedNum,
+        };
       } else {
-        if (candidateName === BIDEN) {
-          acc[state] = {
-            Biden: pctTrendAdjustedNum,
-          };
-        } else {
-          acc[state] = {
-            Trump: pctTrendAdjustedNum,
-          };
-        }
+        results[state] = {
+          [candidateShortName]: pctTrendAdjustedNum,
+        };
       }
 
-      return acc;
+      return results;
     }, {});
 
+    /*
+     * maps the state percentages into objects containing the leader, the margin
+     * and the corresponding state
+     */
     const margins = Object.entries(statePercentages).map(stateData => {
       const [state, percents] = stateData;
       return {
