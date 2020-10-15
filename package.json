@@ -13,6 +13,7 @@
     "axios": "^0.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-query": "^2.23.1",
     "react-scripts": "3.4.3",
     "typescript": "~3.7.2"
   },
