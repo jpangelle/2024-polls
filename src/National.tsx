@@ -7,7 +7,11 @@ type Props = {
 
 export const National = ({ leader, margin }: Props) => {
   return (
-    <h3 className={`national ${leader === 'Trump' ? 'trump' : 'biden'}`}>
+    <h3
+      className={`national ${
+        leader === 'Trump' ? 'national-trump' : 'national-biden'
+      }`}
+    >
       <span>National </span>
       <span>+{margin}</span>
     </h3>

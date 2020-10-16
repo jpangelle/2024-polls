@@ -4,13 +4,15 @@
 }
 
 .header {
-  padding-top: 10px;
-  padding-bottom: 10px;
   align-items: center;
   font-size: 20px;
   background-color: #344061;
   color: #ffffff;
   font-weight: 700;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer {
@@ -20,7 +22,7 @@
   bottom: 0;
   width: 100%;
   padding-top: 5px;
-  padding-bottom: 5px;
+  padding-bottom: 15px;
 }
 
 .footer > a {
@@ -43,16 +45,26 @@
   font-size: 20px;
 }
 
-.biden {
+.national-biden {
   color: #576ca2;
 }
 
-.trump {
+.national-trump {
   color: #e15148;
 }
 
+.biden {
+  text-align: left;
+  /* color: #576ca2; */
+}
+
+.trump {
+  color: #000000;
+  /* color: #e15148; */
+}
+
 .national {
-  font-size: 24px;
+  font-size: 26px;
   margin-bottom: 0;
 }
 
