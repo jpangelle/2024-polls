@@ -18,7 +18,7 @@ exports.handler = async function () {
     const pollResults = await csv().fromString(data);
 
     // get current date in the format of mm/dd/yyyy
-    const date = DateTime.local().toLocaleString();
+    const date = pollResults[0].modeldate;
 
     /*
      * filter for polls:
