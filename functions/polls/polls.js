@@ -1,6 +1,5 @@
 const axios = require('axios');
 const csv = require('csvtojson');
-const { DateTime } = require('luxon');
 const {
   BATTLEGROUND_STATES,
   CANDIDATES_LONG,
