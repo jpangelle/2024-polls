@@ -2,11 +2,10 @@ const BIDEN_LONG = 'Joseph R. Biden Jr.';
 const TRUMP_LONG = 'Donald Trump';
 
 const CANDIDATES_LONG = [BIDEN_LONG, TRUMP_LONG];
-const CANDIDATES_PARTY = {
-  [BIDEN_LONG]: 'democratic',
-  [TRUMP_LONG]: 'republican',
+const CANDIDATES_SHORT = {
+  [BIDEN_LONG]: 'Biden',
+  [TRUMP_LONG]: 'Trump',
 };
-
 const BATTLEGROUND_STATES = [
   'Arizona',
   'Florida',
@@ -26,5 +25,5 @@ const BATTLEGROUND_STATES = [
 module.exports = {
   BATTLEGROUND_STATES,
   CANDIDATES_LONG,
-  CANDIDATES_PARTY,
+  CANDIDATES_SHORT,
 };

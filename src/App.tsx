@@ -1,84 +1,140 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { Biden } from './Biden';
 import { Loader } from './Loader';
 import { National } from './National';
-import { Trump } from './Trump';
+import { Table } from './Table';
 import './App.css';
 
-export type StatePolling = {
+type StatePolling = {
   leader: string;
-  margin: number;
+  margin: string;
   state: string;
 };
 
-type Margins = {
-  margins: StatePolling[];
+type Polls = {
+  polls: StatePolling[];
 };
 
 type NationalPoll = {
   leader: string;
-  margin: number;
+  margin: string;
 };
 
+export type State = {
+  state: string;
+  polls2020: {
+    leader: string;
+    margin: string;
+  };
+  results2016: {
+    leader: string;
+    margin: string;
+  };
+};
+
+type States = State[];
+
 function App() {
-  const [bidenStates, setBidenStates] = useState<StatePolling[]>();
-  const [trumpStates, setTrumpStates] = useState<StatePolling[]>();
   const [nationalPoll, setNationalPoll] = useState<NationalPoll>();
+  const [polls2020, setPolls2020] = useState<StatePolling[]>();
+  const [tableData, setTableData] = useState<States>();
 
-  const sortPollsByCandidate = (polls: Margins) => {
-    const bidenStatesFiltered = polls.margins
-      .filter(margin => {
-        if (margin.state === 'National') {
-          setNationalPoll({ leader: margin.leader, margin: margin.margin });
+  const sortPolls = ({ polls }: Polls) => {
+    const statePolls = polls
+      .filter(poll => {
+        if (poll.state === 'National') {
+          setNationalPoll(poll);
           return false;
-        } else {
-          return margin.leader === 'Biden';
         }
+
+        return poll;
       })
       .sort((a, b) => {
-        return b.margin - a.margin;
-      });
-    const trumpStatesFiltered = polls.margins
-      .filter(margin => {
-        if (margin.state === 'National') {
-          setNationalPoll({ leader: margin.leader, margin: margin.margin });
-          return false;
-        } else {
-          return margin.leader === 'Trump';
-        }
-      })
-      .sort((a, b) => {
+        // @ts-ignore
         return b.margin - a.margin;
       });
 
-    setBidenStates(bidenStatesFiltered);
-    setTrumpStates(trumpStatesFiltered);
+    setPolls2020(statePolls);
   };
 
-  const { status } = useQuery(
-    'polls',
+  const { status: polls2020Status } = useQuery(
+    'polls-2020',
     async () => {
       const response = await axios('/.netlify/functions/polls');
       return response.data;
     },
-    { onSuccess: sortPollsByCandidate },
+    { onSuccess: sortPolls },
   );
+
+  const { data: results2016, status: results2016Status } = useQuery(
+    'results-2016',
+    async () => {
+      const response = await axios('/.netlify/functions/results-2016');
+      return response.data.polls;
+    },
+  );
+
+  useEffect(() => {
+    if (polls2020 && results2016) {
+      const transformedPolls2020 = polls2020.reduce((acc, cur) => {
+        return {
+          ...acc,
+          [cur.state]: {
+            polls2020: {
+              leader: cur.leader,
+              margin: cur.margin,
+            },
+          },
+        };
+      }, {});
+
+      results2016.forEach(({ leader, margin, state }: StatePolling) => {
+        if (transformedPolls2020) {
+          // @ts-ignore
+          transformedPolls2020[state].results2016 = {
+            leader,
+            margin,
+          };
+        }
+      });
+
+      const transformedTableData = Object.entries(transformedPolls2020).map(
+        stateData => {
+          const [state, data] = stateData;
+          return {
+            polls2020: {
+              // @ts-ignore
+              ...data.polls2020,
+            },
+            results2016: {
+              // @ts-ignore
+              ...data.results2016,
+            },
+            state,
+          };
+        },
+      );
+      setTableData(transformedTableData);
+    }
+  }, [polls2020, results2016]);
 
   return (
     <div className="App">
       <div className="header">538 Latest Polls</div>
-      {status === 'loading' && <Loader />}
-      {status === 'success' && nationalPoll && (
-        <>
-          <National leader={nationalPoll.leader} margin={nationalPoll.margin} />
-          <div className="candidates">
-            {bidenStates && <Biden states={bidenStates} />}
-            {trumpStates && <Trump states={trumpStates} />}
-          </div>
-        </>
-      )}
+      {polls2020Status === 'loading' && <Loader />}
+      {polls2020Status === 'success' &&
+        results2016Status === 'success' &&
+        nationalPoll &&
+        tableData && (
+          <>
+            <National
+              leader={nationalPoll.leader}
+              margin={nationalPoll.margin}
+            />
+            <Table tableData={tableData} />
+          </>
+        )}
       <div className="footer">
         <a href="https://fivethirtyeight.com/">
           <img src="https://i.imgur.com/izo5MjD.png" alt="538 logo" />

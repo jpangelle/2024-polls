@@ -3,7 +3,7 @@ const csv = require('csvtojson');
 const {
   BATTLEGROUND_STATES,
   CANDIDATES_LONG,
-  CANDIDATES_SHORT,
+  CANDIDATES_PARTY,
 } = require('./constants');
 
 exports.handler = async function () {
@@ -33,28 +33,29 @@ exports.handler = async function () {
     );
 
     /**
-     * @param {{Biden: number, Trump: number }} percents - the percentage of each candidate in a give state
+     * @param {{democratic: number, republican: number }} percents - the percentage of each party in a give state
      * @returns {string} leader of the given state
      */
     const computeLeader = percents => {
-      if (percents.Biden > percents.Trump) {
-        return 'Biden';
-      } else if (percents.Biden < percents.Trump) {
-        return 'Trump';
+      if (percents.democratic > percents.republican) {
+        return 'democratic';
+      } else if (percents.democratic < percents.republican) {
+        return 'republican';
       }
-      return 'Tie';
+      return 'tie';
     };
 
     /**
-     * @param {{Biden: number, Trump: number }} percents - the percentage of each candidate in a give state
-     * @returns {number} margin between the candidates
+     * @param {{democratic: number, republican: number }} percents - the percentage of each party in a give state
+     * @returns {number} margin between the parties
      */
-    const computeMargin = percents =>
-      Math.round(Math.abs(percents.Biden - percents.Trump) * 10) / 10;
+    const computeMargin = percents => {
+      return Math.abs(percents.democratic - percents.republican).toFixed(1);
+    };
 
     /*
-     * reduces the individual candidate - state objects into a single state object that
-     * contains Biden and Trump's poll percentage
+     * reduces the individual candidate - state objects into a single state
+     * object that contains democratic and republican's poll percentage
      */
     const statePercentages = pollResults2020.reduce((results, stateResult) => {
       const {
@@ -63,16 +64,16 @@ exports.handler = async function () {
         state,
       } = stateResult;
       const pctTrendAdjustedNum = Number(pctTrendAdjusted);
-      const candidateShortName = CANDIDATES_SHORT[candidateName];
+      const candidateParty = CANDIDATES_PARTY[candidateName];
 
       if (results[state]) {
         results[state] = {
           ...results[state],
-          [candidateShortName]: pctTrendAdjustedNum,
+          [candidateParty]: pctTrendAdjustedNum,
         };
       } else {
         results[state] = {
-          [candidateShortName]: pctTrendAdjustedNum,
+          [candidateParty]: pctTrendAdjustedNum,
         };
       }
 
@@ -83,7 +84,7 @@ exports.handler = async function () {
      * maps the state percentages into objects containing the leader, the margin
      * and the corresponding state
      */
-    const margins = Object.entries(statePercentages).map(stateData => {
+    const polls = Object.entries(statePercentages).map(stateData => {
       const [state, percents] = stateData;
       return {
         leader: computeLeader(percents),
@@ -94,7 +95,7 @@ exports.handler = async function () {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ margins }),
+      body: JSON.stringify({ polls }),
     };
   } catch (err) {
     console.log(err);

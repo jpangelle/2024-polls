@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
 .App {
   text-align: center;
   height: 100%;
@@ -34,33 +36,62 @@
   height: 50px;
 }
 
-.candidates {
+.table {
   display: grid;
-  grid-template-columns: 200px 200px;
+  grid-template-columns: 135px 135px 135px;
+  column-gap: 20px;
+  row-gap: 8px;
   justify-content: center;
-}
-
-.biden,
-.trump {
+  text-align: left;
   font-size: 20px;
 }
 
-.national-biden {
+.state {
+  text-align: center;
+  grid-column: 1/2;
+}
+
+.table > h4 {
+  margin-bottom: 15px;
+}
+
+.state-header {
+  text-align: center;
+}
+
+.year {
+  text-align: center;
+}
+
+.circle-2020 {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  bottom: 3px;
+  left: 4px;
+}
+
+.margin {
+  text-align: center;
+  font-family: 'Roboto Mono';
+}
+
+.blue-background {
+  background-color: #576ca2;
+}
+
+.red-background {
+  background-color: #e15148;
+}
+
+.blue {
   color: #576ca2;
 }
 
-.national-trump {
+.red {
   color: #e15148;
-}
-
-.biden {
-  text-align: left;
-  /* color: #576ca2; */
-}
-
-.trump {
-  color: #000000;
-  /* color: #e15148; */
 }
 
 .national {
