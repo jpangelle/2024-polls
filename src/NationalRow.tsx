@@ -1,26 +1,32 @@
 import React from 'react';
-import { National } from './App';
+import { State } from './App';
 
 type Props = {
-  national: National;
+  nationalTableData: State;
 };
 
-export const NationalRow = ({ national }: Props) => (
+export const NationalRow = ({ nationalTableData }: Props) => (
   <div className="national-row">
     <span className="state">National</span>
     <span className="margin">
-      +{national.margin}
+      +{nationalTableData.polls2020.margin}
       <span
         className={`circle-2020 ${
-          national.leader === 'democratic'
+          nationalTableData.polls2020.leader === 'democratic'
             ? 'blue-background'
             : 'red-background'
         }`}
       />
     </span>
     <span className="margin">
-      +2.1
-      <span className="circle-2020 blue-background" />
+      +{nationalTableData.results2016.margin}
+      <span
+        className={`circle-2020 ${
+          nationalTableData.results2016.leader === 'democratic'
+            ? 'blue-background'
+            : 'red-background'
+        }`}
+      />
     </span>
   </div>
 );

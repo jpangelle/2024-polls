@@ -52,18 +52,24 @@ exports.handler = async function () {
     }, {});
 
     /*
-     * maps the state percentages into objects containing the leader, the margin
+     * reduces the state percentages into objects containing the leader, the margin
      * and the corresponding state
      */
-    const polls = Object.entries(statePercentages).map(stateData => {
-      const [state, percents] = stateData;
+    const polls = Object.entries(statePercentages).reduce(
+      (results, stateResult) => {
+        const [state, percentages] = stateResult;
 
-      return {
-        leader: computeLeader(percents),
-        margin: computeMargin(percents),
-        state,
-      };
-    });
+        results[state] = {
+          leader: computeLeader(percentages),
+          margin: computeMargin(percentages),
+        };
+
+        return results;
+      },
+      {},
+    );
+
+    polls.National = { leader: 'democratic', margin: '2.1' };
 
     return {
       statusCode: 200,

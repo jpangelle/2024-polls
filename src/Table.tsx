@@ -1,19 +1,19 @@
-import React from 'react';
-import { National, State } from './App';
+import React, { Fragment } from 'react';
+import { State, States } from './App';
 import { NationalRow } from './NationalRow';
 
 type Props = {
-  national: National;
-  tableData: State[];
+  nationalTableData: State;
+  stateTableData: States;
 };
 
-export const Table = ({ national, tableData }: Props) => (
+export const Table = ({ nationalTableData, stateTableData }: Props) => (
   <div className="table">
     <h3 className="table-header year-2020">2020 Polling</h3>
     <h3 className="table-header year-2016">2016 Result</h3>
-    <NationalRow national={national} />
-    {tableData.map(({ results2016, polls2020, state }) => (
-      <>
+    <NationalRow nationalTableData={nationalTableData} />
+    {stateTableData.map(({ results2016, polls2020, state }) => (
+      <Fragment key={state}>
         <span className="state">{state}</span>
         <span className="margin">
           +{polls2020.margin}
@@ -35,7 +35,7 @@ export const Table = ({ national, tableData }: Props) => (
             }`}
           />
         </span>
-      </>
+      </Fragment>
     ))}
   </div>
 );

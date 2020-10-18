@@ -19,10 +19,8 @@
 .footer {
   display: flex;
   justify-content: center;
-  position: fixed;
-  bottom: 0;
   width: 100%;
-  padding-top: 5px;
+  margin-top: 100px;
   padding-bottom: 15px;
 }
 
@@ -108,7 +106,7 @@
 
 @media only screen and (max-width: 500px) {
   .table-header {
-    font-size: 22px;
+    font-size: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
   }
@@ -116,11 +114,16 @@
   .table {
     grid-template-columns: 130px 100px 100px;
     column-gap: 10px;
+    font-size: 18px;
   }
 
   .national-row {
     grid-template-columns: 130px 100px 100px;
     column-gap: 10px;
+  }
+
+  .footer {
+    margin-top: 50px;
   }
 
   .footer img {

@@ -6,20 +6,21 @@ import { Loader } from './Loader';
 import { Table } from './Table';
 import './App.css';
 
-type StatePolling = {
-  leader: string;
-  margin: string;
-  state: string;
-};
-
-type Polls = {
-  polls: StatePolling[];
-};
-
-export type National = {
-  leader: string;
-  margin: string;
-};
+const BATTLEGROUND_STATES = [
+  'Arizona',
+  'Florida',
+  'Georgia',
+  'Iowa',
+  'Michigan',
+  'Minnesota',
+  'National',
+  'Nevada',
+  'North Carolina',
+  'Ohio',
+  'Pennsylvania',
+  'Texas',
+  'Wisconsin',
+];
 
 export type State = {
   state: string;
@@ -33,95 +34,56 @@ export type State = {
   };
 };
 
-type States = State[];
+export type States = State[];
 
 function App() {
-  const [nationalPolls2020, setNationalPolls2020] = useState<National>();
-  const [polls2020, setPolls2020] = useState<StatePolling[]>();
-  const [tableData, setTableData] = useState<States>();
+  const [nationalTableData, setNationalTableData] = useState<State>();
+  const [stateTableData, setStateTableData] = useState<States>();
 
-  const sortPolls = ({ polls }: Polls) => {
-    const statePolls = polls
-      .filter(poll => {
-        if (poll.state === 'National') {
-          setNationalPolls2020(poll);
-          return false;
-        }
-
-        return poll;
-      })
-      .sort((a, b) => Number(b.margin) - Number(a.margin));
-
-    setPolls2020(statePolls);
-  };
-
-  const { status: polls2020Status } = useQuery(
+  const { data: polls2020Data, status: polls2020Status } = useQuery(
     'polls-2020',
     async () => {
       const response = await axios('/.netlify/functions/polls');
-      return response.data;
+      return response.data.polls;
     },
-    { onSuccess: sortPolls },
   );
 
-  const { data: results2016 } = useQuery('results-2016', async () => {
+  const { data: results2016Data } = useQuery('results-2016', async () => {
     const response = await axios('/.netlify/functions/results-2016');
     return response.data.polls;
   });
 
   useEffect(() => {
-    if (polls2020 && results2016) {
-      const transformedPolls2020 = polls2020.reduce((acc, cur) => {
-        return {
-          ...acc,
-          [cur.state]: {
-            polls2020: {
-              leader: cur.leader,
-              margin: cur.margin,
-            },
-          },
-        };
-      }, {});
+    if (polls2020Data && results2016Data) {
+      const mergedData = BATTLEGROUND_STATES.map(state => ({
+        polls2020: polls2020Data[state],
+        results2016: results2016Data[state],
+        state,
+      }));
 
-      results2016.forEach(({ leader, margin, state }: StatePolling) => {
-        // @ts-ignore
-        if (transformedPolls2020 && transformedPolls2020[state]) {
-          // @ts-ignore
-          transformedPolls2020[state].results2016 = {
-            leader,
-            margin,
-          };
-        }
-      });
+      const sortedStateData = mergedData
+        .filter(data => data.state !== 'National')
+        .sort((a, b) => Number(b.polls2020.margin - a.polls2020.margin));
+      const nationalData = mergedData.find(data => data.state === 'National');
 
-      const transformedTableData = Object.entries(transformedPolls2020).map(
-        stateData => {
-          const [state, data] = stateData;
-          return {
-            polls2020: {
-              // @ts-ignore
-              ...data.polls2020,
-            },
-            results2016: {
-              // @ts-ignore
-              ...data.results2016,
-            },
-            state,
-          };
-        },
-      );
-      setTableData(transformedTableData);
+      setNationalTableData(nationalData);
+      setStateTableData(sortedStateData);
     }
-  }, [polls2020, results2016]);
+  }, [polls2020Data, results2016Data]);
 
   return (
     <div className="App">
       <div className="header">538 Latest Polls</div>
       {polls2020Status === 'loading' && <Loader />}
-      {tableData && nationalPolls2020 && (
-        <Table national={nationalPolls2020} tableData={tableData} />
+      {nationalTableData && stateTableData && (
+        <>
+          <Table
+            nationalTableData={nationalTableData}
+            stateTableData={stateTableData}
+          />
+          <Footer />
+        </>
       )}
-      <Footer />
     </div>
   );
 }
