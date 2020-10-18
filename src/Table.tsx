@@ -1,15 +1,17 @@
 import React from 'react';
-import { State } from './App';
+import { National, State } from './App';
+import { NationalRow } from './NationalRow';
 
 type Props = {
+  national: National;
   tableData: State[];
 };
 
-export const Table = ({ tableData }: Props) => (
+export const Table = ({ national, tableData }: Props) => (
   <div className="table">
-    <h4 className="state-header">State</h4>
-    <h4 className="year">2020 Polling</h4>
-    <h4 className="year">2016 Result</h4>
+    <h3 className="table-header year-2020">2020 Polling</h3>
+    <h3 className="table-header year-2016">2016 Result</h3>
+    <NationalRow national={national} />
     {tableData.map(({ results2016, polls2020, state }) => (
       <>
         <span className="state">{state}</span>

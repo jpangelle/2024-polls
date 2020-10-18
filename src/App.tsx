@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { Footer } from './Footer';
 import { Loader } from './Loader';
-import { National } from './National';
 import { Table } from './Table';
 import './App.css';
 
@@ -16,7 +16,7 @@ type Polls = {
   polls: StatePolling[];
 };
 
-type NationalPoll = {
+export type National = {
   leader: string;
   margin: string;
 };
@@ -36,7 +36,7 @@ export type State = {
 type States = State[];
 
 function App() {
-  const [nationalPoll, setNationalPoll] = useState<NationalPoll>();
+  const [nationalPolls2020, setNationalPolls2020] = useState<National>();
   const [polls2020, setPolls2020] = useState<StatePolling[]>();
   const [tableData, setTableData] = useState<States>();
 
@@ -44,16 +44,13 @@ function App() {
     const statePolls = polls
       .filter(poll => {
         if (poll.state === 'National') {
-          setNationalPoll(poll);
+          setNationalPolls2020(poll);
           return false;
         }
 
         return poll;
       })
-      .sort((a, b) => {
-        // @ts-ignore
-        return b.margin - a.margin;
-      });
+      .sort((a, b) => Number(b.margin) - Number(a.margin));
 
     setPolls2020(statePolls);
   };
@@ -67,13 +64,10 @@ function App() {
     { onSuccess: sortPolls },
   );
 
-  const { data: results2016, status: results2016Status } = useQuery(
-    'results-2016',
-    async () => {
-      const response = await axios('/.netlify/functions/results-2016');
-      return response.data.polls;
-    },
-  );
+  const { data: results2016 } = useQuery('results-2016', async () => {
+    const response = await axios('/.netlify/functions/results-2016');
+    return response.data.polls;
+  });
 
   useEffect(() => {
     if (polls2020 && results2016) {
@@ -90,7 +84,8 @@ function App() {
       }, {});
 
       results2016.forEach(({ leader, margin, state }: StatePolling) => {
-        if (transformedPolls2020) {
+        // @ts-ignore
+        if (transformedPolls2020 && transformedPolls2020[state]) {
           // @ts-ignore
           transformedPolls2020[state].results2016 = {
             leader,
@@ -123,26 +118,10 @@ function App() {
     <div className="App">
       <div className="header">538 Latest Polls</div>
       {polls2020Status === 'loading' && <Loader />}
-      {polls2020Status === 'success' &&
-        results2016Status === 'success' &&
-        nationalPoll &&
-        tableData && (
-          <>
-            <National
-              leader={nationalPoll.leader}
-              margin={nationalPoll.margin}
-            />
-            <Table tableData={tableData} />
-          </>
-        )}
-      <div className="footer">
-        <a href="https://fivethirtyeight.com/">
-          <img src="https://i.imgur.com/izo5MjD.png" alt="538 logo" />
-        </a>
-        <a href="https://github.com/jpangelle/2020-polls">
-          <img src="https://i.imgur.com/uOxQVYw.png" alt="github logo" />
-        </a>
-      </div>
+      {tableData && nationalPolls2020 && (
+        <Table national={nationalPolls2020} tableData={tableData} />
+      )}
+      <Footer />
     </div>
   );
 }

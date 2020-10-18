@@ -49,9 +49,8 @@ exports.handler = async function () {
      * @param {{democratic: number, republican: number }} percents - the percentage of each party in a give state
      * @returns {number} margin between the parties
      */
-    const computeMargin = percents => {
-      return Math.abs(percents.democratic - percents.republican).toFixed(1);
-    };
+    const computeMargin = percents =>
+      Math.abs(percents.democratic - percents.republican).toFixed(1);
 
     /*
      * reduces the individual candidate - state objects into a single state
@@ -86,6 +85,7 @@ exports.handler = async function () {
      */
     const polls = Object.entries(statePercentages).map(stateData => {
       const [state, percents] = stateData;
+
       return {
         leader: computeLeader(percents),
         margin: computeMargin(percents),
