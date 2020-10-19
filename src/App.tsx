@@ -73,7 +73,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="header">538 Latest Polls</div>
+      <div className="header">fivethirtyeight Latest Polls</div>
       {polls2020Status === 'loading' && <Loader />}
       {nationalTableData && stateTableData && (
         <>
