@@ -28,5 +28,15 @@ export const NationalRow = ({ nationalTableData }: Props) => (
         }`}
       />
     </span>
+    <span className="margin">
+      +{nationalTableData.polls2016.margin}
+      <span
+        className={`circle-2020 ${
+          nationalTableData.polls2016.leader === 'democratic'
+            ? 'blue-background'
+            : 'red-background'
+        }`}
+      />
+    </span>
   </div>
 );

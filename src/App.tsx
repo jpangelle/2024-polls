@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { polls2016Data, results2016Data } from './data';
 import { Footer } from './Footer';
 import { Loader } from './Loader';
 import { Table } from './Table';
@@ -32,6 +33,10 @@ export type State = {
     leader: string;
     margin: string;
   };
+  polls2016: {
+    leader: string;
+    margin: string;
+  };
 };
 
 export type States = State[];
@@ -48,16 +53,12 @@ function App() {
     },
   );
 
-  const { data: results2016Data } = useQuery('results-2016', async () => {
-    const response = await axios('/.netlify/functions/results-2016');
-    return response.data.polls;
-  });
-
   useEffect(() => {
-    if (polls2020Data && results2016Data) {
+    if (polls2020Data) {
       const mergedData = BATTLEGROUND_STATES.map(state => ({
         polls2020: polls2020Data[state],
         results2016: results2016Data[state],
+        polls2016: polls2016Data[state],
         state,
       }));
 
@@ -69,7 +70,7 @@ function App() {
       setNationalTableData(nationalData);
       setStateTableData(sortedStateData);
     }
-  }, [polls2020Data, results2016Data]);
+  }, [polls2020Data]);
 
   return (
     <div className="App">

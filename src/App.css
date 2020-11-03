@@ -33,7 +33,7 @@
 
 .table {
   display: grid;
-  grid-template-columns: repeat(3, 140px);
+  grid-template-columns: repeat(4, 140px);
   column-gap: 20px;
   row-gap: 8px;
   justify-content: center;
@@ -72,7 +72,7 @@
 .national-row {
   font-weight: 600;
   display: grid;
-  grid-template-columns: repeat(3, 140px);
+  grid-template-columns: repeat(4, 140px);
   column-gap: 20px;
 }
 
@@ -115,13 +115,13 @@
   }
 
   .table {
-    grid-template-columns: 130px 100px 100px;
+    grid-template-columns: 105px 70px 70px 70px;
     column-gap: 10px;
     font-size: 18px;
   }
 
   .national-row {
-    grid-template-columns: 130px 100px 100px;
+    grid-template-columns: 105px 70px 70px 70px;
     column-gap: 10px;
   }
 

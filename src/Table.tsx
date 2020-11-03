@@ -11,8 +11,9 @@ export const Table = ({ nationalTableData, stateTableData }: Props) => (
   <div className="table">
     <h3 className="table-header year-2020">2020 Polling</h3>
     <h3 className="table-header year-2016">2016 Result</h3>
+    <h3 className="table-header year-2016">2016 Polling</h3>
     <NationalRow nationalTableData={nationalTableData} />
-    {stateTableData.map(({ results2016, polls2020, state }) => (
+    {stateTableData.map(({ results2016, polls2020, polls2016, state }) => (
       <Fragment key={state}>
         <span className="state">{state}</span>
         <span className="margin">
@@ -30,6 +31,16 @@ export const Table = ({ nationalTableData, stateTableData }: Props) => (
           <span
             className={`circle-2020 ${
               results2016.leader === 'democratic'
+                ? 'blue-background'
+                : 'red-background'
+            }`}
+          />
+        </span>
+        <span className="margin">
+          +{polls2016.margin}
+          <span
+            className={`circle-2020 ${
+              polls2016.leader === 'democratic'
                 ? 'blue-background'
                 : 'red-background'
             }`}
