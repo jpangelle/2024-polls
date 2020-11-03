@@ -1,0 +1,15 @@
+export const SHORT_NAMES: { [key: string]: string } = {
+  Arizona: 'AZ',
+  Florida: 'FL',
+  Georgia: 'GA',
+  Iowa: 'IA',
+  Michigan: 'MI',
+  Minnesota: 'MN',
+  National: 'Nat',
+  Nevada: 'NV',
+  'North Carolina': 'NC',
+  Ohio: 'OH',
+  Pennsylvania: 'PA',
+  Texas: 'TX',
+  Wisconsin: 'WI',
+};

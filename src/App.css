@@ -18,7 +18,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 100px;
+  margin-top: 80px;
   padding-bottom: 15px;
 }
 
@@ -33,16 +33,18 @@
 
 .table {
   display: grid;
-  grid-template-columns: repeat(4, 145px);
+  grid-template-columns: repeat(4, min-content);
   column-gap: 20px;
   row-gap: 8px;
   justify-content: center;
   text-align: left;
   font-size: 20px;
+  margin-top: 20px;
 }
 
 .state {
   grid-column: 1/2;
+  white-space: nowrap;
 }
 
 .state-header {
@@ -52,6 +54,7 @@
 .table-header {
   text-align: center;
   margin-bottom: 15px;
+  width: 145px;
 }
 
 .year-2020 {
@@ -70,9 +73,6 @@
 
 .national-row {
   font-weight: 600;
-  display: grid;
-  grid-template-columns: repeat(4, 145px);
-  column-gap: 20px;
 }
 
 .margin {
@@ -111,21 +111,16 @@
     font-size: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
+    width: min-content;
   }
 
   .table {
-    grid-template-columns: 105px 70px 70px 70px;
-    column-gap: 10px;
+    grid-template-columns: min-content 70px 70px 70px;
     font-size: 18px;
   }
 
-  .national-row {
-    grid-template-columns: 105px 70px 70px 70px;
-    column-gap: 10px;
-  }
-
   .footer {
-    margin-top: 50px;
+    margin-top: 30px;
   }
 
   .footer img {
