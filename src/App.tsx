@@ -41,14 +41,14 @@ export type State = {
 
 export type States = State[];
 
-function App() {
+export const App = () => {
   const [nationalTableData, setNationalTableData] = useState<State>();
   const [stateTableData, setStateTableData] = useState<States>();
 
   const { data: polls2020Data, status: polls2020Status } = useQuery(
     'polls-2020',
     async () => {
-      const response = await axios('/.netlify/functions/polls');
+      const response = await axios('/api/polls');
       return response.data.polls;
     },
   );
@@ -87,6 +87,4 @@ function App() {
       )}
     </div>
   );
-}
-
-export default App;
+};
