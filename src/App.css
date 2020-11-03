@@ -54,6 +54,7 @@
 .table-header {
   text-align: center;
   margin-bottom: 15px;
+  font-size: 20px;
   width: 145px;
 }
 
@@ -108,7 +109,7 @@
   }
 
   .table-header {
-    font-size: 20px;
+    font-size: 18px;
     margin-top: 10px;
     margin-bottom: 10px;
     width: min-content;
