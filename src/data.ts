@@ -21,7 +21,7 @@ export const polls2016Data: State = {
   Wisconsin: { leader: 'democratic', margin: '5.4' },
 };
 
-export const results2016Data = {
+export const results2016Data: State = {
   Arizona: { leader: 'republican', margin: '3.5' },
   Florida: { leader: 'republican', margin: '1.2' },
   Georgia: { leader: 'republican', margin: '5.1' },
@@ -35,4 +35,4 @@ export const results2016Data = {
   Pennsylvania: { leader: 'republican', margin: '0.7' },
   Texas: { leader: 'republican', margin: '9.0' },
   Wisconsin: { leader: 'republican', margin: '0.8' },
-} as State;
+};
