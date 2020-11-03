@@ -6,19 +6,19 @@ export type State = {
 };
 
 export const polls2016Data: State = {
-  Arizona: { leader: 'republican', margin: '2.8' },
-  Florida: { leader: 'democratic', margin: '0.9' },
+  Arizona: { leader: 'republican', margin: '2.3' },
+  Florida: { leader: 'democratic', margin: '0.5' },
   Georgia: { leader: 'republican', margin: '4.0' },
-  Iowa: { leader: 'republican', margin: '4.3' },
-  Michigan: { leader: 'democratic', margin: '3.1' },
-  Minnesota: { leader: 'democratic', margin: '8.0' },
-  National: { leader: 'democratic', margin: '3.8' },
-  Nevada: { leader: 'democratic', margin: '0.5' },
-  'North Carolina': { leader: 'democratic', margin: '1.1' },
-  Ohio: { leader: 'republican', margin: '3.0' },
-  Pennsylvania: { leader: 'democratic', margin: '3.1' },
-  Texas: { leader: 'republican', margin: '9.8' },
-  Wisconsin: { leader: 'democratic', margin: '5.0' },
+  Iowa: { leader: 'republican', margin: '3.4' },
+  Michigan: { leader: 'democratic', margin: '4.0' },
+  Minnesota: { leader: 'democratic', margin: '5.9' },
+  National: { leader: 'democratic', margin: '3.9' },
+  Nevada: { leader: 'democratic', margin: '0.7' },
+  'North Carolina': { leader: 'democratic', margin: '0.7' },
+  Ohio: { leader: 'republican', margin: '2.0' },
+  Pennsylvania: { leader: 'democratic', margin: '3.7' },
+  Texas: { leader: 'republican', margin: '8.5' },
+  Wisconsin: { leader: 'democratic', margin: '5.4' },
 };
 
 export const results2016Data = {
