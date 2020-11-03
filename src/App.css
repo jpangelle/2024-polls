@@ -33,7 +33,7 @@
 
 .table {
   display: grid;
-  grid-template-columns: repeat(4, 140px);
+  grid-template-columns: repeat(4, 145px);
   column-gap: 20px;
   row-gap: 8px;
   justify-content: center;
@@ -72,7 +72,7 @@
 .national-row {
   font-weight: 600;
   display: grid;
-  grid-template-columns: repeat(4, 140px);
+  grid-template-columns: repeat(4, 145px);
   column-gap: 20px;
 }
 

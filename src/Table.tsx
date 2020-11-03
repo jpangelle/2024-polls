@@ -10,7 +10,7 @@ type Props = {
 export const Table = ({ nationalTableData, stateTableData }: Props) => (
   <div className="table">
     <h3 className="table-header year-2020">2020 Polling</h3>
-    <h3 className="table-header year-2016">2016 Result</h3>
+    <h3 className="table-header year-2016">2016 Results</h3>
     <h3 className="table-header year-2016">2016 Polling</h3>
     <NationalRow nationalTableData={nationalTableData} />
     {stateTableData.map(({ results2016, polls2020, polls2016, state }) => (

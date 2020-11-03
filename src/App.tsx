@@ -74,7 +74,7 @@ export const App = () => {
 
   return (
     <div className="App">
-      <div className="header">FiveThirtyEight Latest Polls</div>
+      <div className="header">FiveThirtyEight Polling</div>
       {polls2020Status === 'loading' && <Loader />}
       {nationalTableData && stateTableData && (
         <>
