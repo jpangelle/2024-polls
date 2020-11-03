@@ -4,7 +4,7 @@
 
 This web app displays the polling averages for battleground states -- provided by [FiveThirtyEight](https://fivethirtyeight.com/).
 
-**Built on the Netlify platform leveraging serverless functions, Github Actions, and the `create-react-app` toolchain**
+**Built on the Netlify platform leveraging serverless functions, `react-query`, and the `create-react-app` toolchain**
 
 | 2020 Polling                                                                                                                                                                       | 2016 Results                                                                                                                           | 2016 Polling                                                                                                                                                                 |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
