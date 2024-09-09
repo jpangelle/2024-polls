@@ -1,15 +1,13 @@
-## 2020 Polls
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/4b4833c5-eac1-4511-88b8-a6cb8f980378/deploy-status)](https://app.netlify.com/sites/2020-polls/deploys)
+## 2024 Polls
 
 This web app displays the polling averages for battleground states -- provided by [FiveThirtyEight](https://fivethirtyeight.com/).
 
-**Built on the Netlify platform leveraging serverless functions, `react-query`, and the `create-react-app` toolchain**
+**The project is bootstrapped with Next.js and written in TypeScript using React, react-query, and Tailwind CSS.**
 
-| 2020 Polling                                                                                                                                                                       | 2016 Results                                                                                                                           | 2016 Polling                                                                                                                                                                |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| The latest 2020 polling is captured from the [FiveThirtyEight data sets](https://github.com/fivethirtyeight/data/tree/master/polls#polling-averages) when the user visits the site | The 2016 results are sourced from [Wikipedia](https://en.wikipedia.org/wiki/2016_United_States_presidential_election#Results_by_state) | The 2016 polling is sourced from [FiveThirtyEight's final polling averages](https://github.com/fivethirtyeight/data/tree/master/polls#polling-averages) on November 8, 2016 |
+| 2024 Polling                                                                                                                                                                              | 2020 Results                                                                                                                           | 2020 Polling                                                                                                                                                                |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The latest 2024 polling is captured from the [FiveThirtyEight data sets](https://projects.fivethirtyeight.com/polls/data/presidential_general_averages.csv) when the user visits the site | The 2020 results are sourced from [Wikipedia](https://en.wikipedia.org/wiki/2020_United_States_presidential_election#Results_by_state) | The 2020 polling is sourced from [FiveThirtyEight's final polling averages](https://github.com/fivethirtyeight/data/tree/master/polls#polling-averages) on November 3, 2020 |
 
 <a href="https://polls.jpangelle.com">
-  <img src="https://i.imgur.com/UgGkCDo.png" />
+  <img src="https://i.imgur.com/eoMsPBu.png" />
 </a>
