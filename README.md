@@ -2,7 +2,7 @@
 
 This web app displays the polling averages for battleground states -- provided by [FiveThirtyEight](https://fivethirtyeight.com/).
 
-**The project is bootstrapped with Next.js and written in TypeScript using React, react-query, and Tailwind CSS.**
+**The project is bootstrapped with Next.js and written in TypeScript using React and styled with Tailwind CSS.**
 
 | 2024 Polling                                                                                                                                                                              | 2020 Results                                                                                                                           | 2020 Polling                                                                                                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

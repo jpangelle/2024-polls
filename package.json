@@ -7,7 +7,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.55.2",
     "axios": "^1.7.7",
     "csvtojson": "^2.0.10",
     "next": "14.2.8",

@@ -7,7 +7,7 @@ export const polls2020Data = {
   "North Carolina": { leader: "democratic", margin: "1.8" },
   Pennsylvania: { leader: "democratic", margin: "4.7" },
   Wisconsin: { leader: "democratic", margin: "8.4" },
-};
+} as const;
 
 export const results2020Data = {
   Arizona: { leader: "democratic", margin: "0.3" },
@@ -18,4 +18,4 @@ export const results2020Data = {
   "North Carolina": { leader: "republican", margin: "1.4" },
   Pennsylvania: { leader: "democratic", margin: "1.2" },
   Wisconsin: { leader: "democratic", margin: "0.6" },
-};
+} as const;

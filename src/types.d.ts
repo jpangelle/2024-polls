@@ -1,15 +1,15 @@
 type StatePollData = {
   state: string;
   polls2024: {
-    leader: string;
+    leader: "republican" | "democratic" | "tie";
     margin: string;
   };
   results2020: {
-    leader: string;
+    leader: "republican" | "democratic" | "tie";
     margin: string;
   };
   polls2020: {
-    leader: string;
+    leader: "republican" | "democratic" | "tie";
     margin: string;
   };
 };
