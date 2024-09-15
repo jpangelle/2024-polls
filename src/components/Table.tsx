@@ -22,7 +22,7 @@ export const Table = ({ nationalData, stateData }: Props) => {
   return (
     <div className="grid grid-cols-[repeat(4,_min-content)] gap-x-5 gap-y-2 justify-center text-left text-xl mt-5">
       <div />
-      <TableHeader>2024 Polling</TableHeader>
+      <TableHeader>2024 Forecasts</TableHeader>
       <TableHeader>2020 Results</TableHeader>
       <TableHeader>2020 Polling</TableHeader>
       <NationalRow nationalTableData={nationalData} />
